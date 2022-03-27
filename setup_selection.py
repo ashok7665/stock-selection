@@ -44,6 +44,9 @@ def cleanData(_df):
 today_date = dateObj.today()
 today_date = "{}".format(today_date)
 
+print('starting...')
+
+
 for row in trade_list:
 
     historicParam = {
@@ -94,6 +97,8 @@ for row in trade_list:
             'status': 'pending'
         }
 
+        print(sell_order)
+        print(buy_order)
         trades.update_one({"symbol_token": row['symbol_token'], "date": today_date}, {
             "$set": {
                 "status": "order_selected",
