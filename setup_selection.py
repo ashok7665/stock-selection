@@ -97,9 +97,10 @@ for row in trade_list:
             'status': 'pending'
         }
 
-        print(sell_order)
-        print(buy_order)
-        trades.update_one({"symbol_token": row['symbol_token'], "date": today_date}, {
+        #print(sell_order)
+        #print(buy_order)
+        print(row['symbol_token'])
+        trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
             "$set": {
                 "status": "order_selected",
                 "buy_order": buy_order,
