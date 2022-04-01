@@ -57,7 +57,7 @@ for row in trade_list:
         "todate": today_date+" 09:30",
     }
     historicData = obj.getCandleData(historicParam)
-    print(historicData,row["trading_symbol"])
+    #print(historicData,row["trading_symbol"]
     if historicData['data'] is None:
         continue
 
@@ -69,10 +69,6 @@ for row in trade_list:
    # print(  abs(mother_candle['High'] - mother_candle['Low']),CANDLE_PERCENT * mother_candle['Low'],row['trading_symbol'])
     if mother_candle["Low"] < child_candle['Low'] and mother_candle['High'] > child_candle['High'] and (
             abs(mother_candle['High'] - mother_candle['Low']) <= CANDLE_PERCENT * mother_candle['Low']):
-
-        print(row['trading_symbol'])
-        print(mother_candle)
-        print(child_candle)
         target_ratio = 1.5
         if mother_candle['High'] > 6000:
             target_ratio = 2
@@ -81,6 +77,7 @@ for row in trade_list:
         quantity = fetchQuantity(buy_price)
         target = buy_price + (buy_price - sl) * target_ratio
 
+        
         buy_order = {
             'buy_price': buy_price,
             'target': target,
@@ -89,10 +86,18 @@ for row in trade_list:
             'status': 'pending'
         }
 
+        
+        sell_price= child_candle['Low']
+        sell_sl = child_candle['High']
+        sell_target = child_candle['Low'] - (sell_sl - child_candle['Low']) * target_ratio
+
+        #print(row['symbol_token'])
+        #print(sell_price)
+        #print(sell_target)
         sell_order = {
             'sell_price': child_candle['Low'],
             'sl': child_candle['High'],
-            'target': child_candle['Low'] - ((sl - child_candle['Low']) * target_ratio),
+            'target': sell_target,
             'quantity': quantity,
             'status': 'pending'
         }
@@ -102,7 +107,7 @@ for row in trade_list:
         print(row['symbol_token'])
         trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
             "$set": {
-                "status": "order_selected",
+               "status": "order_selected",
                 "buy_order": buy_order,
                 "sell_order": sell_order
             }},upsert=True)
