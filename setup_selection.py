@@ -63,7 +63,7 @@ for row in trade_list:
     if historicData['data'] is None:
         continue
 
-    time.sleep(500)
+    time.sleep(.8)
     intra_df = pd.DataFrame(historicData['data'])
     intra_df = cleanData(intra_df)
     mother_candle = intra_df.iloc[0]
