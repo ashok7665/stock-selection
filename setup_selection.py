@@ -4,7 +4,7 @@ import pandas as pd
 import pymongo
 from datetime import date as dateObj
 import datetime;
-
+import time;
 
 # CONFIGRAION
 CANDLE_PERCENT = 0.10
@@ -60,10 +60,10 @@ for row in trade_list:
         "todate": today_date+" 09:30",
     }
     historicData = obj.getCandleData(historicParam)
-    #print(historicData,row["trading_symbol"]
     if historicData['data'] is None:
         continue
 
+    time.sleep(500)
     intra_df = pd.DataFrame(historicData['data'])
     intra_df = cleanData(intra_df)
     mother_candle = intra_df.iloc[0]
@@ -108,3 +108,4 @@ for row in trade_list:
                 "buy_order": buy_order,
                 "sell_order": sell_order
             }},upsert=True)
+
