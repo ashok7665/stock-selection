@@ -20,10 +20,8 @@ data = obj.generateSession("A201547", "Ashok7665@")
 refreshToken = data['data']['refreshToken']
 
 trade_list = trades.find({"date": "{}".format(today)})
-for d in trade_list:
-    print(d)
 
-    
+
 def fetchQuantity(price):
     if price > 10000:
         return 10
