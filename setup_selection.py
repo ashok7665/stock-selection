@@ -10,7 +10,7 @@ import datetime;
 CANDLE_PERCENT = 0.10
 
 # INIT
-myclient = pymongo.MongoClient("mongodb+srv://admin:admin@cluster0.hqsll.mongodb.net/msquare",connect=False)
+myclient = pymongo.MongoClient("mongodb+srv://admin:admin@cluster0.6ur6q.mongodb.net/msquare?retryWrites=true&w=majority",connect=False)
 mydb = myclient["msquare"]
 trades = mydb["trades"]
 today = dateObj.today()
