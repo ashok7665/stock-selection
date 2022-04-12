@@ -1,14 +1,16 @@
+
 from smartapi import SmartConnect  # or from
 import pandas as pd
 import pymongo
 from datetime import date as dateObj
+import datetime;
+
 
 # CONFIGRAION
 CANDLE_PERCENT = 0.10
 
 # INIT
-myclient = pymongo.MongoClient(
-    "mongodb+srv://admin:admin@cluster0.6ur6q.mongodb.net/msquare?retryWrites=true&w=majority")
+myclient = pymongo.MongoClient("mongodb+srv://admin:admin@cluster0.hqsll.mongodb.net/msquare",connect=False)
 mydb = myclient["msquare"]
 trades = mydb["trades"]
 today = dateObj.today()
@@ -19,6 +21,8 @@ refreshToken = data['data']['refreshToken']
 
 trade_list = trades.find({"date": "{}".format(today)})
 
+
+print(trade_list)
 
 def fetchQuantity(price):
     if price > 10000:
@@ -44,8 +48,10 @@ def cleanData(_df):
 today_date = dateObj.today()
 today_date = "{}".format(today_date)
 
-print('starting...')
+now_datetime = datetime.datetime.now();
 
+print('\n\n-----------------------------------')
+print("datetime: {}".format(today))
 
 for row in trade_list:
 
@@ -90,10 +96,6 @@ for row in trade_list:
         sell_price= child_candle['Low']
         sell_sl = child_candle['High']
         sell_target = child_candle['Low'] - (sell_sl - child_candle['Low']) * target_ratio
-
-        #print(row['symbol_token'])
-        #print(sell_price)
-        #print(sell_target)
         sell_order = {
             'sell_price': child_candle['Low'],
             'sl': child_candle['High'],
@@ -102,12 +104,9 @@ for row in trade_list:
             'status': 'pending'
         }
 
-        #print(sell_order)
-        #print(buy_order)
-        print(row['symbol_token'])
-        trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
-            "$set": {
-               "status": "order_selected",
-                "buy_order": buy_order,
-                "sell_order": sell_order
-            }},upsert=True)
+        # trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
+        #     "$set": {
+        #        "status": "order_selected",
+        #         "buy_order": buy_order,
+        #         "sell_order": sell_order
+        #     }},upsert=True)
