@@ -108,6 +108,8 @@ for row in trade_list:
                 "buy_order": buy_order,
                 "sell_order": sell_order
             }},upsert=True)
-        for doc in cursor:
-            print(doc)
+        print(cursor.raw_result)
+        print(cursor.upserted_id)
+        print(cursor.acknowledged)
+        print(cursor.modified_count)
 
