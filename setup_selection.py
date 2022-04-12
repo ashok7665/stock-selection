@@ -102,16 +102,11 @@ for row in trade_list:
             'status': 'pending'
         }
 
-        print(row['symbol_token'])
-        print(today_date)
+        print(row['trading_symbol'])
         cursor = trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
             "$set": {
                "status": "order_selected",
                 "buy_order": buy_order,
                 "sell_order": sell_order
             }},upsert=True)
-        print(cursor.raw_result)
-        print(cursor.upserted_id)
-        print(cursor.acknowledged)
-        print(cursor.modified_count)
 
