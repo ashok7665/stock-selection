@@ -21,6 +21,7 @@ refreshToken = data['data']['refreshToken']
 
 trade_list = trades.find({"date": "{}".format(today)})
 
+print(trade_list)
 def fetchQuantity(price):
     if price > 10000:
         return 10
