@@ -21,9 +21,6 @@ refreshToken = data['data']['refreshToken']
 
 trade_list = trades.find({"date": "{}".format(today)})
 
-
-print(trade_list)
-
 def fetchQuantity(price):
     if price > 10000:
         return 10
@@ -104,9 +101,10 @@ for row in trade_list:
             'status': 'pending'
         }
 
-        # trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
-        #     "$set": {
-        #        "status": "order_selected",
-        #         "buy_order": buy_order,
-        #         "sell_order": sell_order
-        #     }},upsert=True)
+        print(row['symbol_token'])
+        trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
+            "$set": {
+               "status": "order_selected",
+                "buy_order": buy_order,
+                "sell_order": sell_order
+            }},upsert=True)
