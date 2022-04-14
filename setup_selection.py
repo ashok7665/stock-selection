@@ -50,9 +50,9 @@ now_datetime = datetime.datetime.now();
 
 print('\n\n-----------------------------------')
 print("datetime: {}".format(today))
-
+print(trade_list)
 for row in trade_list:
-    time.sleep(1)
+    time.sleep(0.5)
     historicParam = {
         "exchange": "NSE",
         "symboltoken": row["symbol_token"],
