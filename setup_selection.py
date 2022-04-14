@@ -52,7 +52,7 @@ print('\n\n-----------------------------------')
 print("datetime: {}".format(today))
 
 for row in trade_list:
-
+    time.sleep(1)
     historicParam = {
         "exchange": "NSE",
         "symboltoken": row["symbol_token"],
@@ -63,8 +63,6 @@ for row in trade_list:
     historicData = obj.getCandleData(historicParam)
     if historicData['data'] is None:
         continue
-
-    time.sleep(1.1)
     intra_df = pd.DataFrame(historicData['data'])
     intra_df = cleanData(intra_df)
     mother_candle = intra_df.iloc[0]
