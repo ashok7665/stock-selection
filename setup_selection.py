@@ -50,7 +50,8 @@ now_datetime = datetime.datetime.now();
 
 print('\n\n-----------------------------------')
 print("datetime: {}".format(today))
-print(trade_list)
+for d in trade_list:
+    print(d)
 for row in trade_list:
     time.sleep(0.5)
     historicParam = {
