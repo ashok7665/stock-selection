@@ -103,7 +103,7 @@ for row in trade_list:
         print(row['trading_symbol'])
         cursor = trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
             "$set": {
-               #"status": "order_selected",
+               "status": "order_selected",
                 "buy_order": buy_order,
                 "sell_order": sell_order
             }},upsert=True)
