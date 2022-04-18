@@ -75,7 +75,7 @@ for row in trade_list:
         if mother_candle['High'] > 6000:
             target_ratio = 2
         buy_price = child_candle['High'] + 1
-        sl = child_candle['Low'] - 1
+        sl = child_candle['Low']
         quantity = fetchQuantity(buy_price)
         target = buy_price + (buy_price - sl) * target_ratio
 
@@ -89,12 +89,12 @@ for row in trade_list:
         }
 
         
-        sell_price= child_candle['Low']
+        sell_price= child_candle['Low'] -1 
         sell_sl = child_candle['High']
         sell_target = child_candle['Low'] - (sell_sl - child_candle['Low']) * target_ratio
         sell_order = {
-            'sell_price': child_candle['Low'],
-            'sl': child_candle['High'],
+            'sell_price': sell_price,
+            'sl': sell_sl,
             'target': sell_target,
             'quantity': quantity,
             'status': 'pending'
@@ -103,7 +103,7 @@ for row in trade_list:
         print(row['trading_symbol'])
         cursor = trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
             "$set": {
-               "status": "order_selected",
+               #"status": "order_selected",
                 "buy_order": buy_order,
                 "sell_order": sell_order
             }},upsert=True)
