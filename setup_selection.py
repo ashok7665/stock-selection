@@ -7,7 +7,7 @@ import datetime;
 import time;
 
 # CONFIGRAION
-CANDLE_PERCENT = 0.10
+CANDLE_PERCENT = 0.05
 
 # INIT
 myclient = pymongo.MongoClient("mongodb+srv://admin:admin@cluster0.6ur6q.mongodb.net/msquare?retryWrites=true&w=majority",connect=False)
