@@ -15,8 +15,8 @@ mydb = myclient["msquare"]
 trades = mydb["trades"]
 today = dateObj.today()
 
-obj = SmartConnect(api_key="TWOFZgdZ")
-data = obj.generateSession("A201547", "Ashok7665@")
+obj = SmartConnect(api_key="ilgUlOtU")
+data = obj.generateSession("P246447", "Jangir76@")
 refreshToken = data['data']['refreshToken']
 
 trade_list = trades.find({"date": "{}".format(today)})
@@ -72,8 +72,8 @@ for row in trade_list:
     if mother_candle["Low"] < child_candle['Low'] and mother_candle['High'] > child_candle['High'] and (
             abs(mother_candle['High'] - mother_candle['Low']) <= CANDLE_PERCENT * mother_candle['Low']):
         target_ratio = 1.5
-        if mother_candle['High'] > 6000:
-            target_ratio = 2
+        if mother_candle['High'] > 2000:
+            target_ratio = 2.2
         buy_price = child_candle['High'] + 1
         sl = child_candle['Low']
         quantity = fetchQuantity(buy_price)
@@ -107,4 +107,3 @@ for row in trade_list:
                 "buy_order": buy_order,
                 "sell_order": sell_order
             }},upsert=True)
-
