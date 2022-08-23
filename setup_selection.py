@@ -17,8 +17,9 @@ today = dateObj.today()
 
 obj = SmartConnect(api_key="ilgUlOtU")
 data = obj.generateSession("P246447", "Jangir76@")
+print(data)
 refreshToken = data['data']['refreshToken']
-
+print(refreshToken)
 trade_list = trades.find({"date": "{}".format(today)})
 
 for trade in trade_list:
@@ -67,6 +68,7 @@ try:
         }
         historicData = obj.getCandleData(historicParam)
         if historicData['data'] is None:
+            print('data is none')
             continue
         intra_df = pd.DataFrame(historicData['data'])
         intra_df = cleanData(intra_df)
