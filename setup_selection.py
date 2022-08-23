@@ -58,6 +58,7 @@ print("datetime: {}".format(today))
 
 try:
     for row in trade_list:
+        print('data ',row)
         time.sleep(0.5)
         historicParam = {
             "exchange": "NSE",
@@ -76,7 +77,7 @@ try:
         mother_candle = intra_df.iloc[0]
         child_candle = intra_df.iloc[1]
 
-        print( mother_candle["Low"],child_candle['Low'],  abs(mother_candle['High'] - mother_candle['Low']),CANDLE_PERCENT * mother_candle['Low'],row['trading_symbol'])
+        #print( mother_candle["Low"],child_candle['Low'],  abs(mother_candle['High'] - mother_candle['Low']),CANDLE_PERCENT * mother_candle['Low'],row['trading_symbol'])
         if mother_candle["Low"] < child_candle['Low'] and mother_candle['High'] > child_candle['High'] and (
                 abs(mother_candle['High'] - mother_candle['Low']) <= CANDLE_PERCENT * mother_candle['Low']):
             target_ratio = 1.5
