@@ -1,5 +1,4 @@
 
-from tkinter import E
 from smartapi import SmartConnect  # or from
 import pandas as pd
 import pymongo
