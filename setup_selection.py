@@ -55,9 +55,7 @@ print("datetime: {}".format(today))
 
 
 try:
-    print('okey fucc')
     for row in trade_list:
-        print('data ', row)
         time.sleep(0.5)
         historicParam = {
             "exchange": "NSE",
