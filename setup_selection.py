@@ -3,14 +3,15 @@ from smartapi import SmartConnect  # or from
 import pandas as pd
 import pymongo
 from datetime import date as dateObj
-import datetime;
-import time;
+import datetime
+import time
 
 # CONFIGRAION
 CANDLE_PERCENT = 0.05
 
 # INIT
-myclient = pymongo.MongoClient("mongodb+srv://admin:admin@cluster0.6ur6q.mongodb.net/msquare?retryWrites=true&w=majority",connect=False)
+myclient = pymongo.MongoClient(
+    "mongodb+srv://admin:admin@cluster0.6ur6q.mongodb.net/msquare?retryWrites=true&w=majority", connect=False)
 mydb = myclient["msquare"]
 trades = mydb["trades"]
 today = dateObj.today()
@@ -21,9 +22,6 @@ print(data)
 refreshToken = data['data']['refreshToken']
 print(refreshToken)
 trade_list = trades.find({"date": "{}".format(today)})
-
-for trade in trade_list:
-    print(trade)
 
 
 def fetchQuantity(price):
@@ -50,15 +48,16 @@ def cleanData(_df):
 today_date = dateObj.today()
 today_date = "{}".format(today_date)
 
-now_datetime = datetime.datetime.now();
+now_datetime = datetime.datetime.now()
 
 print('\n\n-----------------------------------')
 print("datetime: {}".format(today))
 
 
 try:
+    print('okey fucc')
     for row in trade_list:
-        print('data ',row)
+        print('data ', row)
         time.sleep(0.5)
         historicParam = {
             "exchange": "NSE",
@@ -71,7 +70,7 @@ try:
         if historicData['data'] is None:
             print('data is none')
             continue
-        print("processing-->",trade)
+        print("processing-->", trade)
         intra_df = pd.DataFrame(historicData['data'])
         intra_df = cleanData(intra_df)
         mother_candle = intra_df.iloc[0]
@@ -88,7 +87,6 @@ try:
             quantity = fetchQuantity(buy_price)
             target = buy_price + (buy_price - sl) * target_ratio
 
-            
             buy_order = {
                 'buy_price': buy_price,
                 'target': target,
@@ -97,10 +95,10 @@ try:
                 'status': 'pending'
             }
 
-            
-            sell_price= child_candle['Low'] -1 
+            sell_price = child_candle['Low'] - 1
             sell_sl = child_candle['High']
-            sell_target = child_candle['Low'] - (sell_sl - child_candle['Low']) * target_ratio
+            sell_target = child_candle['Low'] - \
+                (sell_sl - child_candle['Low']) * target_ratio
             sell_order = {
                 'sell_price': sell_price,
                 'sl': sell_sl,
@@ -112,9 +110,9 @@ try:
             print(row['trading_symbol'])
             cursor = trades.update_one({"symbol_token": str(row['symbol_token']), "date": today_date}, {
                 "$set": {
-                "status": "order_selected",
+                    "status": "order_selected",
                     "buy_order": buy_order,
                     "sell_order": sell_order
-                }},upsert=True)
+                }}, upsert=True)
 except Exception as e:
-    print("ERROR ->",e)
+    print("ERROR ->", e)
